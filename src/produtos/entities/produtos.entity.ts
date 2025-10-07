@@ -1,5 +1,12 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Categoria } from '../../categoria/entities/categoria.entity';
 
 @Entity({ name: 'tb_produtos' })
 export class Produto {
@@ -19,9 +26,9 @@ export class Produto {
   preco: number;
 
   //Relacionamento Many-to-One: Muitos Produtos têm Uma Categoria
-  //@ManyToOne(() => Categoria, (categoria) => categoria.produtos, {
-  //  onDelete: 'CASCADE', // Opcional: define o comportamento de exclusão
-  //  })
-  //  @JoinColumn({ name: 'categoria_id' })
-  //  categoria: Categoria;
+  @ManyToOne(() => Categoria, (categoria) => categoria.produtos, {
+    onDelete: 'CASCADE', // Opcional: define o comportamento de exclusão
+  })
+  @JoinColumn({ name: 'categoria_id' })
+  categoria: Categoria;
 }
